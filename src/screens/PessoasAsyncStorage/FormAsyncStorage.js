@@ -3,9 +3,9 @@ import { StyleSheet, View } from 'react-native'
 import { Button, Text, TextInput } from 'react-native-paper'
 import Toast from 'react-native-toast-message'
 
-export default function FormtarefaAsyncStorage({ navigation, route }) {
+export default function FormAsyncStorage({ navigation, route }) {
 
-    const { acao, tarefa: tarefaAntiga } = route.params
+    const { acao, tarefa: tarefaOld } = route.params
 
     const [nome, setNome] = useState('')
     const [idade, setIdade] = useState('')
@@ -16,11 +16,11 @@ export default function FormtarefaAsyncStorage({ navigation, route }) {
 
     useEffect(() => {
 
-        console.log('tarefa -> ', tarefaAntiga)
+        console.log('tarefa -> ', tarefaOld)
 
-        if (tarefaAntiga) {
-            setNome(tarefaAntiga.nome)
-            setIdade(tarefaAntiga.idade)
+        if (tarefaOld) {
+            setNome(tarefaOld.nome)
+            setIdade(tarefaOld.idade)
         }
 
     }, [])
@@ -33,27 +33,27 @@ export default function FormtarefaAsyncStorage({ navigation, route }) {
         } else {
             setShowMensagemErro(false)
 
-            const novatarefa = {
+            const newtarefa = {
                 nome: nome,
                 idade: idade,
 
             }
 
-            const objetoEmString = JSON.stringify(novatarefa)
-            console.log("🚀 ~ file: Formtarefa.js:47 ~ salvar ~ objetoEmString:", objetoEmString)
+            const objetoEmString = JSON.stringify(newtarefa)
+            console.log("🚀 ~ file: FormAsyncStorage.js:47 ~ salvar ~ objetoEmString:", objetoEmString)
 
             console.log(typeof (objetoEmString))
 
             const objeto = JSON.parse(objetoEmString)
-            console.log("🚀 ~ file: Formtarefa.js:52 ~ salvar ~ objeto:", objeto)
+            console.log("🚀 ~ file: FormAsyncStorage.js:52 ~ salvar ~ objeto:", objeto)
 
             console.log(typeof (objeto))
 
 
-            if (tarefaAntiga) {
-                acao(tarefaAntiga, novatarefa)
+            if (tarefaOld) {
+                acao(tarefaOld, newtarefa)
             } else {
-                acao(novatarefa)
+                acao(newtarefa)
             }
 
 
@@ -72,7 +72,7 @@ export default function FormtarefaAsyncStorage({ navigation, route }) {
     return (
         <View style={styles.container}>
 
-            <Text variant='titleLarge' style={styles.title} >{tarefaAntiga ? 'Editar Tarefa' : 'Adicionar Tarefa'}</Text>
+            <Text variant='titleLarge' style={styles.title} >{tarefaOld ? 'Editar Tarefa' : 'Adicionar Tarefa'}</Text>
 
             <View style={styles.inputContainer}>
                 <TextInput

@@ -1,16 +1,16 @@
 
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React from 'react'
-import StackPessoasAsyncStorage from '../screens/PessoasAsyncStorage/StacktarefaAsyncStorage'
+import StackAsyncStorage from '../screens/PessoasAsyncStorage/StackAsyncStorage'
 
 
 const Drawer = createDrawerNavigator()
 
 export default function DrawerRoutes() {
     return (
-        <Drawer.Navigator initialRouteName='ListaTarefas'>
+        <Drawer.Navigator initialRouteName='ListaAsyncStorage'>
 
-            <Drawer.Screen name="ListaTarefas" component={StackPessoasAsyncStorage} />
+            <Drawer.Screen name="ListaAsyncStorage" component={StackAsyncStorage} />
         
         </Drawer.Navigator>
 

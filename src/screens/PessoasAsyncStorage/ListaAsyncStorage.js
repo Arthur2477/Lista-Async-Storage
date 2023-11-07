@@ -5,7 +5,7 @@ import { Button, Card, Dialog, FAB, MD3Colors, Portal, Text } from 'react-native
 import Toast from 'react-native-toast-message'
 
 
-export default function ListatarefasAsyncStorage({ navigation, route }) {
+export default function ListaAsyncStorage({ navigation, route }) {
 
   const [tarefas, settarefas] = useState([])
   const [showModalExcluirUsuario, setShowModalExcluirUsuario] = useState(false)
@@ -18,7 +18,7 @@ export default function ListatarefasAsyncStorage({ navigation, route }) {
 
   async function loadtarefas() {
     const response = await AsyncStorage.getItem('tarefas')
-    console.log("🚀 ~ file: ListatarefasAsyncStorage.js:21 ~ loadtarefas ~ response:", response)
+    console.log("🚀 ~ file: ListaAsyncStorage.js:21 ~ loadtarefas ~ response:", response)
     const tarefasStorage = response ? JSON.parse(response) : []
     settarefas(tarefasStorage)
   }
@@ -29,34 +29,34 @@ export default function ListatarefasAsyncStorage({ navigation, route }) {
 
   const hideModal = () => setShowModalExcluirUsuario(false);
 
-  async function adicionartarefa(tarefa) {
-    let novaListatarefas = tarefas
-    novaListatarefas.push(tarefa)
-    await AsyncStorage.setItem('tarefas', JSON.stringify(novaListatarefas));
-    settarefas(novaListatarefas)
+  async function addtarefa(tarefa) {
+    let newListatarefas = tarefas
+    newListatarefas.push(tarefa)
+    await AsyncStorage.setItem('tarefas', JSON.stringify(newListatarefas));
+    settarefas(newListatarefas)
   }
 
-  async function editartarefa(tarefaAntiga, novosDados) {
-    console.log('tarefa ANTIGA -> ', tarefaAntiga)
-    console.log('DADOS NOVOS -> ', novosDados)
+  async function editartarefa(tarefaOld, newDados) {
+    console.log('tarefa ANTIGA -> ', tarefaOld)
+    console.log('DADOS NOVOS -> ', newDados)
 
-    const novaListatarefas = tarefas.map(tarefa => {
-      if (tarefa == tarefaAntiga) {
-        return novosDados
+    const newListatarefas = tarefas.map(tarefa => {
+      if (tarefa == tarefaOld) {
+        return newDados
       } else {
         return tarefa
       }
     })
 
-    await AsyncStorage.setItem('tarefas', JSON.stringify(novaListatarefas))
-    settarefas(novaListatarefas)
+    await AsyncStorage.setItem('tarefas', JSON.stringify(newListatarefas))
+    settarefas(newListatarefas)
 
   }
 
   async function excluirtarefa(tarefa) {
-    const novaListatarefas = tarefas.filter(p => p !== tarefa)
-    await AsyncStorage.setItem('tarefas', JSON.stringify(novaListatarefas))
-    settarefas(novaListatarefas)
+    const newListatarefas = tarefas.filter(p => p !== tarefa)
+    await AsyncStorage.setItem('tarefas', JSON.stringify(newListatarefas))
+    settarefas(newListatarefas)
     Toast.show({
       type: 'success',
       text1: 'tarefa excluida com sucesso!'
@@ -92,7 +92,7 @@ export default function ListatarefasAsyncStorage({ navigation, route }) {
               </View>
             </Card.Content>
             <Card.Actions>
-              <Button onPress={() => navigation.push('FormtarefaAsyncStorage', { acao: editartarefa, tarefa: item })}>
+              <Button onPress={() => navigation.push('FormAsyncStorage', { acao: editartarefa, tarefa: item })}>
                 Editar
               </Button>
               <Button onPress={() => {
@@ -110,7 +110,7 @@ export default function ListatarefasAsyncStorage({ navigation, route }) {
       <FAB
         icon="plus"
         style={styles.fab}
-        onPress={() => navigation.push('FormtarefaAsyncStorage', { acao: adicionartarefa })}
+        onPress={() => navigation.push('FormAsyncStorage', { acao: addtarefa })}
       />
 
 
